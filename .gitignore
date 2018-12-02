@@ -1,0 +1,21 @@
+.tools/
+.builddir/
+delivery/*
+.ropeproject/
+log/*
+dependencies/*
+pyenv/
+/vagrant/
+
+*.retry
+*.pyc
+.*.swp
+
+docs/build/
+
+!*/.gitkeep
+
+# python related folders
+poetry.lock
+*.egg-info
+dist/

@@ -1,0 +1,11 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "clickable_igloo"
+author = "Laurent Almeras"
+author-email = "laurent.almeras@kobalt.fr"
+home-page = "https://github.com/igloo-project/igloo-ansible-playbooks"
+classifiers = ["License :: OSI Approved :: MIT License"]
+

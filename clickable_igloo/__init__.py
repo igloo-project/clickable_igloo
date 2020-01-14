@@ -132,7 +132,8 @@ def _igloo_full_decorators():
         click.option('--build-igloo', default=False, is_flag=True, help='Build igloo; implies build-project.'),
         click.option('--force-rebuild', default=False, is_flag=True, help='Rebuild already built items.'),
         click.option('--skip-handlers', default=False, is_flag=True, help='Skip handlers; display messages instead. YOU MUST ensure manually that needed restart are performed.'),
-        click.option('--phases', default='', help='Choose phases to perform, separate with comma ",": ' + ', '.join(_PHASES))
+        click.option('--phases', default='', help='Choose phases to perform, separate with comma ",": ' + ', '.join(_PHASES)),
+        configure_extra_vars()
     ]
 
 

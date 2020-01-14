@@ -89,13 +89,15 @@ def _igloo_full_decorators():
                 extra_vars = kwargs['extra_vars']
                 if not extra_vars:
                     extra_vars = []
+                if type(extra_vars) is tuple:
+                    extra_vars = list(extra_vars)
                 new_kwargs = dict(kwargs)
 
                 deploy_war = False
 
                 # deliver a war file
-                if 'deliver' in new_kwargs:
-                    deliver = new_kwargs.pop('deliver')
+                deliver = new_kwargs.pop('deliver', None)
+                if deliver:
                     extra_vars.append('{}={}'.format('playbook_gitlab_cd_war_location', deliver))
                     deploy_war = True
 

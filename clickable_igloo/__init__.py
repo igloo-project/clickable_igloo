@@ -8,6 +8,8 @@ import os
 import os.path
 import subprocess
 
+import click
+
 import clickable.coloredlogs
 
 import clickable_ansible

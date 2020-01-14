@@ -6,7 +6,7 @@ authors = ["Laurent Almeras <laurent.almeras@kobalt.fr>"]
 packages = [ { include = "clickable_igloo" } ]
 
 [tool.poetry.dependencies]
-clickable = { git = "https://github.com/lalmeras/clickable.git", branch = "ft-ansible" }
+clickable = { git = "https://github.com/lalmeras/clickable.git", branch = "ft-extra-args" }
 
 [tool.poetry.dev-dependencies]
 

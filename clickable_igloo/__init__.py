@@ -84,48 +84,53 @@ _PHASES = ['firewall', 'httpd', 'tomcat', 'filesystem', 'postgresql', 'glowroot'
 def _igloo_full_decorators():
     # function that handles listed options below
     def configure_extra_vars():
-        def wrapper(*args, **kwargs):
-            extra_vars = kwargs['extra_vars']
-            if not extra_vars:
-                extra_vars = []
-            new_kwargs = dict(kwargs)
+        def decorator(f):
+            def wrapper(*args, **kwargs):
+                extra_vars = kwargs['extra_vars']
+                if not extra_vars:
+                    extra_vars = []
+                new_kwargs = dict(kwargs)
 
-            deploy_war = False
+                deploy_war = False
 
-            # deliver a war file
-            if 'deliver' in new_kwargs:
-                deliver = new_kwargs.pop('deliver')
-                extra_vars.append('{}={}'.format('playbook_gitlab_cd_war_location', deliver))
-                deploy_war = True
+                # deliver a war file
+                if 'deliver' in new_kwargs:
+                    deliver = new_kwargs.pop('deliver')
+                    extra_vars.append('{}={}'.format('playbook_gitlab_cd_war_location', deliver))
+                    deploy_war = True
 
-            # build and deliver application
-            if new_kwargs.get('build_igloo', None):
-                extra_vars.append('{}={}'.format('playbook_build_igloo', 'true'))
-            if new_kwargs.get('build_project', None) or new_kwargs.get('build_igloo', None):
-                extra_vars.append('{}={}'.format('playbook_build_project', 'true'))
-                deploy_war = True
-            new_kwargs.pop('build_project')
-            new_kwargs.pop('build_igloo')
+                # build and deliver application
+                if new_kwargs.get('build_igloo', None):
+                    extra_vars.append('{}={}'.format('playbook_build_igloo', 'true'))
+                if new_kwargs.get('build_project', None) or new_kwargs.get('build_igloo', None):
+                    extra_vars.append('{}={}'.format('playbook_build_project', 'true'))
+                    deploy_war = True
+                new_kwargs.pop('build_project')
+                new_kwargs.pop('build_igloo')
 
-            # force rebuild
-            if new_kwargs.pop('force_rebuild', None):
-                extra_vars.append('{}={}'.format('playbook_rebuild_project', 'true'))
-                extra_vars.append('{}={}'.format('playbook_rebuild_igloo', 'true'))
-            
-            phases = new_kwargs.pop('phases', None)
-            if phases:
-                for phase in phases:
-                    extra_args.append('--tags={}'.format(phase))
+                # force rebuild
+                if new_kwargs.pop('force_rebuild', None):
+                    extra_vars.append('{}={}'.format('playbook_rebuild_project', 'true'))
+                    extra_vars.append('{}={}'.format('playbook_rebuild_igloo', 'true'))
+                
+                phases = new_kwargs.pop('phases', None)
+                if phases:
+                    for phase in phases:
+                        extra_args.append('--tags={}'.format(phase))
 
-            skip_handlers = new_kwargs.pop('skip_handlers', None)
-            if skip_handlers:
-                extra_vars.append('{}={}'.format('handlers_inhibited', 'true'))
+                skip_handlers = new_kwargs.pop('skip_handlers', None)
+                if skip_handlers:
+                    extra_vars.append('{}={}'.format('handlers_inhibited', 'true'))
 
-            # playbook_deploy_war=true if war or built application must be delivered
-            if deploy_war:
-                extra_vars.append('{}={}'.format('playbook_deploy_war', 'true'))
-            else:
-                extra_vars.append('{}={}'.format('playbook_deploy_war', 'false'))
+                # playbook_deploy_war=true if war or built application must be delivered
+                if deploy_war:
+                    extra_vars.append('{}={}'.format('playbook_deploy_war', 'true'))
+                else:
+                    extra_vars.append('{}={}'.format('playbook_deploy_war', 'false'))
+
+                return f(*args, **new_kwargs)
+            return wrapper
+        return decorator
     return [
         click.option('--deliver', default=None, help='War to deliver. If none/empty, delivery is not performed.'),
         click.option('--build-project', default=False, is_flag=True, help='Build project and deliver war.'),

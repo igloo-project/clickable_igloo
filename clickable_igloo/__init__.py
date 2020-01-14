@@ -91,7 +91,14 @@ def _igloo_full_decorators():
                     extra_vars = []
                 if type(extra_vars) is tuple:
                     extra_vars = list(extra_vars)
+                extra_args = kwargs['extra_args']
+                if not extra_args:
+                    extra_args = []
+                if type(extra_args) is tuple:
+                    extra_args = list(extra_args)
                 new_kwargs = dict(kwargs)
+                new_kwargs['extra_vars'] = extra_vars
+                new_kwargs['extra_args'] = extra_args
 
                 deploy_war = False
 

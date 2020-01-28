@@ -103,9 +103,9 @@ def _igloo_full_decorators():
                 deploy_war = False
 
                 # deliver a war file
-                deliver = new_kwargs.pop('deliver', None)
-                if deliver:
-                    extra_vars.append('{}={}'.format('playbook_gitlab_cd_war_location', deliver))
+                war_path = new_kwargs.pop('war_path', None)
+                if war_path:
+                    extra_vars.append('{}={}'.format('playbook_gitlab_cd_war_location', war_path))
                     deploy_war = True
 
                 # build and deliver application
@@ -141,8 +141,8 @@ def _igloo_full_decorators():
             return wrapper
         return decorator
     return [
-        click.option('--deliver', default=None, help='War to deliver. If none/empty, delivery is not performed.'),
-        click.option('--build-project', default=False, is_flag=True, help='Build project and deliver war.'),
+            click.option('--war-path', default=None, help='War to deliver. If none/empty, delivery is not performed (except if build-project is used).'),
+        click.option('--build-project', default=False, is_flag=True, help='Build project and deliver war. war-path must not be provided.'),
         click.option('--build-igloo', default=False, is_flag=True, help='Build igloo; implies build-project.'),
         click.option('--force-rebuild', default=False, is_flag=True, help='Rebuild already built items.'),
         click.option('--skip-handlers', default=False, is_flag=True, help='Skip handlers; display messages instead. YOU MUST ensure manually that needed restart are performed.'),

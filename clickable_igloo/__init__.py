@@ -124,7 +124,7 @@ def _igloo_full_decorators():
                 
                 phases = new_kwargs.pop('phases', None)
                 if phases:
-                    for phase in phases:
+                    for phase in phases.split(','):
                         extra_args.append('--tags={}'.format(phase))
 
                 skip_handlers = new_kwargs.pop('skip_handlers', None)

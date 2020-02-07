@@ -141,7 +141,7 @@ def _igloo_full_decorators():
             return wrapper
         return decorator
     return [
-            click.option('--war-path', default=None, help='War to deliver. If none/empty, delivery is not performed (except if build-project is used).'),
+        click.option('--war-path', default=None, help='War to deliver. If none/empty, delivery is not performed (except if build-project is used).'),
         click.option('--build-project', default=False, is_flag=True, help='Build project and deliver war. war-path must not be provided.'),
         click.option('--build-igloo', default=False, is_flag=True, help='Build igloo; implies build-project.'),
         click.option('--force-rebuild', default=False, is_flag=True, help='Rebuild already built items.'),

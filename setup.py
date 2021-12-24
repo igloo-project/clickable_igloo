@@ -22,6 +22,7 @@ setup(
     version="1.1.dev0",
     description=("Igloo helpers for clickable."),
     long_description=readme + '\n\n' + history,
+    long_description_content_type="text/markdown",
     author="Laurent Almeras",
     author_email='lalmeras@gmail.com',
     url='https://github.com/lalmeras/clickable_igloo',
@@ -32,7 +33,7 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "clickable @ git+https://github.com/lalmeras/clickable@v1.3#egg=clickable"
+        "clickable >= 1.5"
     ],
     python_requires='>=3.6',
     license="BSD license",

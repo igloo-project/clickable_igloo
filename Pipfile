@@ -17,6 +17,8 @@ rope = "*"
 black = ">= 20.8b1"
 pur = "*"
 sphinx = "*"
+wheel = "*"
+pypiserver = "*"
 
 [packages]
 clickable_igloo = {editable = true, path = "."}

@@ -19,7 +19,7 @@ pipenv install --dev
 # prepare dev branch for release...
 # update version
 # increase version; may be launch multiple time to cycle dev, rc, ...
-bump2version --verbose prerel
+bump2version --verbose prerel [--allow-dirty] [--no-commit] [--no-tag]
 
 # merge on main
 git checkout main
@@ -34,4 +34,19 @@ bump2version --verbose --no-tag minor
 # delete (git tag -d <tag> unneeded tags - dev, rc)
 git push --all
 git push --tag
+
+# publish (pypi credentials required)
+git checkout tag
+pipenv shell
+python setup.py clean --all
+rm -rf dist/*
+python setup.py sdist
+python setup.py bdist_wheel
+# fake upload
+# run pypi-server in another shell
+mkdir -p /tmp/packages && pypi-server -P . -a . /tmp/packages/
+twine upload  -u "" -p "" --repository-url http://localhost:8080/ dist/*.whl dist/*.tar.gz
+
+# real upload
+twine upload dist/*.whl dist/*.tar.gz
 ```

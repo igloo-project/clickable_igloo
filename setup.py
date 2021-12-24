@@ -19,7 +19,7 @@ test_requirements = [
 
 setup(
     name='clickable_igloo',
-    version="1.1.dev0",
+    version="1.1",
     description=("Igloo helpers for clickable."),
     long_description=readme + '\n\n' + history,
     long_description_content_type="text/markdown",
